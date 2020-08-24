@@ -25,9 +25,9 @@ Good luck!
 * We want to assess your way of working on the code. The feature that is included in the source is to get you started but __by no means correct / complete /the best way__. Refactor and restructure anything in the e2e folder if you think that works better. Please explain choices you make so we can assess your comprehension and skill with the framework
 * When you `npm start` the application know that `npm run e2e` will start it again (and fail). So kill a running application if startup fails.
 
-Please provide your documentation in the [ASSESSMENT-SOLUTION.MD](./ASSESSMENT-SOLUTION.MD) file.
+Please provide your documentation in the [ASSESSMENT-SOLUTION.MD](README.MD) file.
 
-## Assignment 
+## Assignment
 
 ### Start
 

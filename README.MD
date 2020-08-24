@@ -132,11 +132,11 @@ Since it was specified modifying the app was an option, I've added `data-test` a
 For the [App](src/app/app.component.html) component:
 
 - **_app-loading_** - For the loading element, important to assess whether the app is in an expectation-ready state
-- **_app-notfound_**- For the root element
+- **_app-notfound_**- For the Not Found message
 
 For the [Planet](src/app/components/planet/planet.component.html) component:
 
-- **_planet_**
+- **_planet_** - For the root element
 - **_planet-name_**
 - **_planet-population_**
 - **_planet-climate_**
@@ -162,7 +162,7 @@ There are two reports you can browse.
 ![asd](assets/allure1.png)
 
 
-If it was not done autocatically, you can generate the report after a test run with
+If it was not done automatically, you can generate the report after a test run with
 ```javascript
 npm run report:generate
 ```

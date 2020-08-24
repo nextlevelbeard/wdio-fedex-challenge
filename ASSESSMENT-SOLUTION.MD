@@ -34,10 +34,10 @@ I based this solution on a boilerplate I've been working for some time.
             - [features](tests/e2e/features)
             - [pages](tests/e2e/pages)
             - [services](tests/e2e/services)
-            - [steps](tests/e2e/services)
+            - [steps](tests/e2e/steps)
             - [utils](tests/e2e/utils)
         - [visual](tests/visual)
-            - [configs](tests/visual/configs))
+            - [configs](tests/visual/configs)
             - [snapshots](tests/visual/snapshots)
         - [base.conf.js](tests/base.conf.js) - Base configuration for tests E2E or not
     - [docker-compose.yml](docker-compose.yml) - A Docker compose file to bring up a local [Zalenium](https://opensource.zalando.com/zalenium/) grid
@@ -61,9 +61,9 @@ There are several options to run the tests as highlighted by this table:
 |  Description | Automation Protocol | npm scprit  | Configuration file |
 |---|---|---|---|
 | On the local machine with CDP / Pupeteer  | Chrome Devtools Protocol | `test:e2e:local` | [local.conf.js](tests/e2e/configs/local.conf.js)  |
-| On the local machine with Selenium Grid   | webdriver                | `test:e2e:grid`  | [grid.conf.js](tests/e2e/configs/local.conf.js) |
-| Against a local (or remote) Zalenium Grid | webdriver                | `test:e2e:zal`   | [zalenium.conf.js](tests/e2e/configs/local.conf.js) |
-| Against BrowserStack                      | webdriver                | `test:e2e:bs`    | [bs.conf.js](tests/e2e/configs/local.conf.js)  |
+| On the local machine with Selenium Grid   | webdriver                | `test:e2e:grid`  | [grid.conf.js](tests/e2e/configs/grid.conf.js) |
+| Against a local (or remote) Zalenium Grid | webdriver                | `test:e2e:zal`   | [zalenium.conf.js](tests/e2e/configs/zal.conf.js) |
+| Against BrowserStack                      | webdriver                | `test:e2e:bs`    | [bs.conf.js](tests/e2e/configs/bs.conf.js)  |
 
 > You can combine these options with parallel mode which will spin up a browser instance per Scenario instead of per feature file (capped at a maximum of 4 as per [tests/base.conf.js](tests/base.conf.js)).
 >
@@ -134,7 +134,7 @@ For the [App](src/app/app.component.html) component:
 - **_app-loading_** - For the loading element, important to assess whether the app is in an expectation-ready state
 - **_app-notfound_**- For the root element
 
-For the [Character](src/app/components/planet/planet.component.html) component:
+For the [Planet](src/app/components/planet/planet.component.html) component:
 
 - **_planet_**
 - **_planet-name_**

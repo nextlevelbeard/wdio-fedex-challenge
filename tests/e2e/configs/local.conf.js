@@ -27,10 +27,6 @@ module.exports.config = merge(config, {
 		}
 	]),
 
-	// services: [["selenium-standalone", { port: "4444" }]],
-	// //geckoDriverRandomPort: true,
-	// services: [["chromedriver", { port: 4444 }]],
 	port: 4444,
 	path: "/"
-	// chromeDriverArgs: ["--port=4444"],
 });

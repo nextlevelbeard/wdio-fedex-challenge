@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run Scenario on BrowserStack @ chrome" type="js.build_tools.npm">
+    <package-json value="$PROJECT_DIR$/package.json" />
+    <command value="run" />
+    <scripts>
+      <script value="test:e2e:bs" />
+    </scripts>
+    <arguments value="-- --browserName chrome --spec $ContentRoot$/$FilePathRelativeToProjectRoot$:$LineNumber$" />
+    <node-interpreter value="node" />
+    <envs />
+    <method v="2" />
+  </configuration>
+</component>

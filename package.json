@@ -1,0 +1,127 @@
+{
+  "name": "wdio-fedex-challenge",
+  "version": "0.0.1",
+  "description": "webdriverIO challenge solution for FedEx",
+  "jest": {
+    "verbose": true,
+    "json": true
+  },
+  "scripts": {
+    "test:e2e:local": "wdio tests/e2e/configs/local.conf.js",
+    "test:e2e:grid": "wdio tests/e2e/configs/grid.conf.js",
+    "test:e2e:zal": "wdio tests/e2e/configs/zalenium.conf.js",
+    "test:e2e:bs": "wdio tests/e2e/configs/bs.conf.js",
+    "test:e2e:ci": "wdio tests/e2e/configs/ci.conf.js",
+    "test:visual:local": "wdio tests/visual/configs/visual.conf.js",
+    "report:generate": "allure generate .run/results/allure --clean -o .run/reports/allure",
+    "report:open": "allure open .run/reports/allure",
+    "posttest:e2e:*": "npm run report:generate",
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build --prod",
+    "lint": "ng lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:nextlevelbeard/wdio-fedex-challenge.git"
+  },
+  "keywords": [
+    "e2e",
+    "tests",
+    "e2e-tests"
+  ],
+  "author": {
+    "name": "Ricardo Barbosa",
+    "url": "https://github.com/nextlevelbeard"
+  },
+  "license": "GNU Lesser General Public License v3.0",
+  "bugs": {
+    "url": "git@github.com:nextlevelbeard/wdio-fedex-challenge.git/issues"
+  },
+  "homepage": "git@github.com:nextlevelbeard/wdio-fedex-challenge.git",
+  "dependencies": {
+    "@angular/animations": "7.2.4",
+    "@angular/common": "7.2.4",
+    "@angular/compiler": "7.2.4",
+    "@angular/core": "7.2.4",
+    "@angular/forms": "7.2.4",
+    "@angular/http": "7.2.4",
+    "@angular/platform-browser": "7.2.4",
+    "@angular/platform-browser-dynamic": "7.2.4",
+    "@angular/router": "7.2.4",
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.10.5",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-transform-arrow-functions": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/register": "^7.10.5",
+    "@octokit/auth-action": "^1.2.2",
+    "@octokit/auth-token": "^2.4.2",
+    "@octokit/rest": "^18.0.3",
+    "@wdio/allure-reporter": "^6.3.6",
+    "@wdio/browserstack-service": "^6.4.0",
+    "@wdio/cli": "^6.4.0",
+    "@wdio/config": "^6.1.14",
+    "@wdio/cucumber-framework": "^6.4.0",
+    "@wdio/local-runner": "^6.4.0",
+    "@wdio/logger": "^6.0.16",
+    "@wdio/mocha-framework": "^6.4.0",
+    "@wdio/runner": "^6.4.0",
+    "@wdio/selenium-standalone-service": "^6.4.0",
+    "@wdio/spec-reporter": "^6.4.0",
+    "@wdio/sync": "^6.4.0",
+    "allure-commandline": "^2.13.0",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "browserstack-local": "^1.4.5",
+    "core-js": "^2.6.11",
+    "cucumber": "^6.0.5",
+    "deepmerge": "^4.2.2",
+    "devtools": "^6.4.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-wdio": "^6.0.12",
+    "esm": "^3.2.25",
+    "expect-webdriverio": "^1.2.0",
+    "fs-extra": "^9.0.1",
+    "glob": "^7.1.6",
+    "got": "^11.5.2",
+    "js-yaml": "^3.14.0",
+    "lodash": "^4.17.20",
+    "multiple-cucumber-html-reporter": "^1.18.0",
+    "protractor-cucumber-framework": "^6.2.1",
+    "rxjs": "^6.5.5",
+    "rxjs-compat": "^6.5.5",
+    "typescript": "3.2.4",
+    "wdio-cucumber-parallel-execution": "^3.6.14",
+    "wdio-cucumberjs-json-reporter": "^2.0.2",
+    "wdio-image-comparison-service": "^1.13.6",
+    "webdriver": "^6.4.0",
+    "webdriverio": "^6.4.0",
+    "yargs": "^15.4.1",
+    "zone.js": "0.8.29",
+    "node-emoji": "^1.10.0"
+  },
+  "engines": {
+    "node": ">=12.13.0",
+    "npm": ">=6.12.0"
+  },
+  "moduleRoots": [
+    ".",
+    "src",
+    "src/shared"
+  ],
+  "lint-staged": {
+    "**/*.{js,css}": [
+      "lint",
+      "git add"
+    ]
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.33.0",
+    "@typescript-eslint/parser": "^2.33.0",
+    "@angular-devkit/build-angular": "^0.12.4",
+    "@angular/cli": "^7.3.10",
+    "@angular/compiler-cli": "7.2.4",
+    "@angular/language-service": "7.2.4"
+  }
+}

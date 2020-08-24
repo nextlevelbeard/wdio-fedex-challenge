@@ -1,0 +1,39 @@
+{
+  "presets": [
+    [
+        "@babel/preset-env",
+        {
+            "targets": {
+                "node": "current"
+            }
+        }
+    ]
+],
+  "plugins": [
+    "@babel/plugin-proposal-class-properties",
+    "@babel/transform-arrow-functions"
+    ],
+  "env": {
+    "development": {
+      "presets": [
+        [
+          "env"
+        ]
+      ]
+    },
+    "test": {
+      "plugins": [
+        [
+          "module-resolver",
+          {
+            "alias": {
+              "shared": "./src/shared",
+              "tests": "./tests",
+              "components": "./components",
+              "pages": "./pages"
+            }
+          }
+        ]]
+    }
+  }
+}

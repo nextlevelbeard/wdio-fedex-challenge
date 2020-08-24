@@ -1,0 +1,21 @@
+.side-nav__brand {
+  background: url('custom-logo.svg') no-repeat left center !important;
+  margin-left: 20px;
+  font-size: 16px;
+}
+
+.side-nav__brand-text {
+  visibility: hidden;
+}
+
+.side-nav.side-nav_collapsed .side-nav__brand {
+  margin-right: 10px;
+  background: url('custom-logo-collapsed.svg') no-repeat left center !important;
+  padding-bottom: 122px;
+  padding-left: 50px;
+  margin-left: 5px;
+}
+
+.side-nav {
+	background: #4d148c;
+}

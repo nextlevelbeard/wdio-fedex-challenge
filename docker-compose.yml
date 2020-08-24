@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  #--------------#
+  zalenium:
+    privileged: true
+    image: dosel/zalenium
+    container_name: zalenium
+    hostname: zalenium
+    tty: true
+    volumes:
+      - /tmp/videos:/home/seluser/videos
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 4444:4444
+    command: >
+      start --desiredContainers 2
+            --maxDockerSeleniumContainers 4
+            --maxDockerSeleniumContainers 8
+            --screenWidth 1920 --screenHeight 1080
+            --timeZone "Europe/Amsterdam"
+#            --videoRecordingEnabled true
+#            --browserStackEnabled true
+#            --startTunnel true
+
+    environment:
+#      - HOST_UID
+#      - HOST_GID
+#      - BROWSER_STACK_USER
+#      - BROWSER_STACK_KEY
+      - PULL_SELENIUM_IMAGE=true

@@ -1,0 +1,10 @@
+This is the FedEx QA protractor assessment project.
+
+Please refer to the folder: qa-test-assessment-master for the application code & the protractor tests.
+
+Also in this folder:
+- README.md for documentation on our little frontend app & how to get it running
+- ASSESSMENT.MD: what we expect from you in the assessment
+- ASSESSMENT_SOLUTION.MD will be your location to keep notes on your approach and document bugs you may find
+
+Good luck and have fun!

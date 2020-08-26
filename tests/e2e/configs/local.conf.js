@@ -15,7 +15,7 @@ module.exports.config = merge(config, {
 		{
 			browserName: "firefox",
 			'moz:firefoxOptions': {
-				binary: '/home/trinity/Downloads/nightly/firefox'
+				binary: undefined
 			}
 		}
 		,

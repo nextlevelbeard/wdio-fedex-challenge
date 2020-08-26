@@ -11,7 +11,7 @@ Spoke to Arpan about the possibility of building a solution using webdriverIO in
 I based this solution on a boilerplate I've been working for some time.
 
 
-#### Folder structure
+## Folder structure
 - /
     - [.idea](.idea) - Run configuration for your convenience
     - [.run](.run) - The folder aggregating the latest test run artifacts
@@ -42,7 +42,7 @@ I based this solution on a boilerplate I've been working for some time.
         - [base.conf.js](tests/base.conf.js) - Base configuration for tests E2E or not
     - [docker-compose.yml](docker-compose.yml) - A Docker compose file to bring up a local [Zalenium](https://opensource.zalando.com/zalenium/) grid
 
-#### Bootstrapping
+## Bootstrapping
 
 As per assessment, use Node 10 for the app.
 My custom webdriverIO-based project however needs at least Node 12 LTS. The app also does not seem to mind it.
@@ -58,41 +58,58 @@ npm install
 ```
 There are several options to run the tests as highlighted by this table:
 
-|  Description | Automation Protocol | npm scprit  | Configuration file |
+|  Description | Automation Protocol | npm script  | Configuration file |
 |---|---|---|---|
-| On the local machine with CDP / Pupeteer  | Chrome Devtools Protocol | `test:e2e:local` | [local.conf.js](tests/e2e/configs/local.conf.js)  |
+| On the local machine with CDP / Pupeteer  | Chrome Devtools Protocol | `test:e2e`/`test:e2e:local` | [local.conf.js](tests/e2e/configs/local.conf.js)  |
 | On the local machine with Selenium Grid   | webdriver                | `test:e2e:grid`  | [grid.conf.js](tests/e2e/configs/grid.conf.js) |
 | Against a local (or remote) Zalenium Grid | webdriver                | `test:e2e:zal`   | [zalenium.conf.js](tests/e2e/configs/zal.conf.js) |
 | Against BrowserStack                      | webdriver                | `test:e2e:bs`    | [bs.conf.js](tests/e2e/configs/bs.conf.js)  |
 
-> You can combine these options with parallel mode which will spin up a browser instance per Scenario instead of per feature file (capped at a maximum of 4 as per [tests/base.conf.js](tests/base.conf.js)).
->
-
-
-|    |            |
-|----------|:-------------:|
-| ![Run configurations](assets/runconfigs.png) |_Too many options? Use an IntelliJ IDE and pick a run configuration that was provided with the project._ ||
-
-By default, all the tests run with the first option and go against 2 browsers: Chrome and Firefox.
-To invoke this type of test run, simply execute:
+To run a specific feature file pass `--spec` flag to the command with the path, something like:
 ```shell script
-npm run test:e2e:local
+npm run test:e2e -- --browserName chrome --spec tests/e2e/features/SearchPlanet.feature
 ```
+For specfic Scenarios, in the `--spec` file passed, add the line number of the Scenario
+```shell script
+npm run test:e2e -- --browserName chrome --spec tests/e2e/features/SearchCharacter.feature:11
+```
+
+For convenience, there are 3 suites configured, one for [general Search](tests/e2e/features/Search.feature),
+one for [Character](tests/e2e/features/SearchCharacter.feature) and
+another for [Planet](tests/e2e/features/SearchPlanet.feature).
+Simply pass `--suite` flag to the command with [one of the suite's names](tests/e2e/configs/cucumber.conf.js):
+ ```shell script
+ npm run test:e2e -- --browserName chrome --suite planet
+ ```
+
+
+> You can combine these options with parallel mode which will spin up a browser instance per Scenario
+> instead of per feature file (capped at a maximum of 4 as per [tests/base.conf.js](tests/base.conf.js)).
+> Simply add `--parallel` to any command like so:
+> ```shell script
+> npm run test:e2e:local --parallel`
+> ```
+
+By default, the tests will go against 2 browsers: Chrome and Firefox.
 If you want to specify which browser (and this is valid for all test run options) use `--browserName` as such:
 
 ```shell script
 npm run test:e2e:local -- --browserName chrome
 ```
+> ![Firefox](https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg)
+> To run Firefox via Chrome Devtools Protocol you need to:
+> - [Firefox Nightly](https://www.mozilla.org/nl/firefox/channel/desktop/)
+> - specify the binary path in [local.conf.js](tests/e2e/configs/local.conf.js)
+> - [have "nightly" in the that path](https://github.com/webdriverio/webdriverio/pull/5528/files#diff-cce01ca3db8de5ff8a2dfcbb95dc732aR133)
 > ```shell script
 > npm run test:e2e:local -- --browserName firefox
 > ```
-> ![Firefox](https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg)
-> To run Firefox via Chrome Devtools Protocol you need [Firefox Nightly](https://www.mozilla.org/nl/firefox/channel/desktop/) and
-  to specify the binary path in [local.conf.js](tests/e2e/configs/local.conf.js). [Oh and have "nightly" in the that path](https://github.com/webdriverio/webdriverio/pull/5528/files#diff-cce01ca3db8de5ff8a2dfcbb95dc732aR133).
 
+|    |            |
+|----------|:-------------:|
+| ![Run configurations](assets/runconfigs.png) |_**Too many options?** <br> Use an IntelliJ IDE and <br> pick a run configuration.<br><br> For Scenarios, the cursor should be on their name / line number in order to work._ ||
 
-
-#### Problems faced
+## Problems faced
 
 - In the provided protactor-based boilerplate, the globing pattern for the .feature files was missing.
 Tests obviously would not run.
@@ -119,7 +136,7 @@ were necessary as per the [documentation](https://www.protractortest.org/#/frame
 - Running the tests was failing due to a missing `tests-reports` folder in the `qa-tests-assessment-master` base folder.
 Creating this folder solves the problem, perhaps this step should be part of the setup.
 
-#### Approach
+## Approach
 
 ##### `data-test` attributes
 
@@ -153,11 +170,11 @@ For the [Character](src/app/components/character/character.component.html) compo
 
 For the [SearchForm](src/app/components/search-form/search-form.component.html) component, `search-form` at the root.
 
-#### Reporting
+## Reporting
 
 There are two reports you can browse.
 
-##### Allure
+### Allure
 
 ![asd](assets/allure1.png)
 
@@ -171,13 +188,13 @@ You can then serve and open it by
 npm run report:open
 ```
 
-##### Multiple Cucumber
+### Multiple Cucumber
 ![asd](assets/multiple.png)
 
 You should be provided a link to the automatically generated HTML file after the test run.
 Either way, the last run report always kept in [here](.run/reports/cucumber/index.html).
 
-#### Remarks
+## Remarks
 
 - There is a bit of code being reused among the Planet-focused and Characters-focused step implementations.
  Figured it was more important to show proper separation of concerns and not have

@@ -13,41 +13,59 @@ const _PARALLEL_FEATURES = path.join(baseConf.RUN_PATH, "features");
 const htmlReporter = require("multiple-cucumber-html-reporter");
 const parallelParser = require("wdio-cucumber-parallel-execution");
 
-function parallelize (specArray = []) {
+function parallelize (specArray = [], parallelDir) {
+	const regExpHasLine = /(.*)[:](\d+)$/;
+	parallelDir = path.resolve(parallelDir)
 	specArray = Array.isArray(specArray) ? specArray : [specArray];
 
-	specArray = specArray
-		.map(s => path.resolve(s))
-		.map(s => glob.sync(s))
-		.map(files => files.map(file =>
-			path.join(
-				_PARALLEL_FEATURES,
-				path.basename(file).replace(/.feature$/, "_*.feature"))
-		))
+	const specsWithLines = [];
+	return specArray
+		// Discover specs with a Scenario line and store them
+		.map(spec => {
+			const [fullPath, usablePath, scenarioLineNo] = regExpHasLine.exec(spec) || [];
+			scenarioLineNo && specsWithLines.push({ fullPath, usablePath, scenarioLineNo })
+			return scenarioLineNo ? path.resolve(usablePath) : path.resolve(spec)
+		})
+		// Discover more files with globbing patterns (i.e. in suites)
+		.map(f => glob.sync(f)).flat()
+		// Map feature files to a globbing pattern in the parallel features folder
+		.map(file => path.join(parallelDir, `${path.basename(file, ".feature")}_*.feature`))
+		// Discover more files with that pattern
+		.map(f => glob.sync(f)).flat()
+		// Assess if file had a Scenario line, if so filter the exact Scenario(s)
+		.filter(parallelFile => {
 
-	const result = [...new Set(specArray)]
-		.flat()
-		.map(s => glob.sync(s))
-		.map(files => files.map(file => file))
-		.flat()
+			const splitFile = fs.readFileSync(parallelFile, 'UTF-8').split(/\r?\n/).map(line => line.trim());
 
-	return result
+			const specObj = specsWithLines
+				.find(({ usablePath }) =>
+					parallelFile.includes(`${path.basename(usablePath, ".feature")}_`)
+				)
+
+			if(!specObj)
+				return true;
+
+			const {  fullPath, scenarioLineNo } = specObj;
+
+			const originalLines = fs.readFileSync(fullPath, 'UTF-8').split(/\r?\n/).map(line => line.trim());
+
+			return originalLines
+				.some((originalLine, index) =>
+					Number(scenarioLineNo) === index + 1 &&
+					splitFile.some(splitLine => splitLine === originalLine) ||
+					false
+				)
+		});
 }
 
 module.exports.config = merge(baseConf, {
 	specs: [ path.join(_FEATURES, "**/*.feature") ],
 	suites: Object.fromEntries(
 		Object.entries({
-			character: [ "SearchCharacter/**/*.feature" ],
-			planet: [ "SearchCharacter/**/*.feature" ],
-			search: [ "Search*/**/*.feature" ]
+			character: [ "./tests/e2e/features/SearchCharacter.feature" ],
+			planet: [ "./tests/e2e/features/SearchPlanet.feature" ],
+			search: [ "./tests/e2e/features/Search.feature" ]
 		})
-			.map(([name, value]) => [
-				name,
-				Array.isArray(value)
-					? value.map(spec => path.join(_FEATURES, spec))
-					: path.join(_FEATURES, value)
-			])
 	),
 	framework: "cucumber",
 	cucumberOpts: {
@@ -61,7 +79,6 @@ module.exports.config = merge(baseConf, {
 		],
 		tagsInTitle: false,
 		timeout: 120000
-		//tagExpression: "@TestRailID=C35"
 	},
 	reporters: [
 		[ "cucumberjs-json", { jsonFolder: baseConf._RESULTS_JSON } ],
@@ -102,14 +119,14 @@ module.exports.config = merge(baseConf, {
 				cleanTmpSpecDirectory: true
 			});
 			// Parallelize the default specs
-			config.specs = parallelize(config.specs)
+			config.specs = parallelize(config.specs, _PARALLEL_FEATURES)
 			config.suites = Object.fromEntries(
 				Object.entries(config.suites)
-					.map(([name, pattern]) => [name, parallelize(pattern)])
+					.map(([name, pattern]) => [name, parallelize(pattern, _PARALLEL_FEATURES)])
 			);
 			// Parallelize the CLI specs
 			if (argSpecs) {
-				config.specs = parallelize(argSpecs);
+				config.specs = parallelize(argSpecs, _PARALLEL_FEATURES)
 			}
 			// Filter the (already parallelized) suites
 			if (argSuites) {

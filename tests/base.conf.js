@@ -96,14 +96,12 @@ module.exports.config = {
 			Object.keys(cap).every(key => {
 				const
 					capKeyValue = cap[key],
-					cliKeyValue = argv[key],
-					cliKeyDefined = cliKeyValue !== undefined,
-					capKeyValueisObj = typeof capKeyValue === "object",
-					capKeyValueStr = `${capKeyValue || ""}`.toLowerCase(),
-					cliKeyValueStr = `${cliKeyValue || ""}`.toLowerCase()
-				;
-				return capKeyValueisObj && this.filterCaps([capKeyValue]).length ||
-					cliKeyDefined ? capKeyValueStr.includes(cliKeyValueStr) : true
+					cliValues = [argv[key]].flat(),
+					capKeyValueIsObj = typeof capKeyValue === "object",
+					capKeyValueStr = `${capKeyValue || ""}`.toLowerCase();
+
+				return capKeyValueIsObj && this.filterCaps([capKeyValue]).length ||
+					cliValues.length ? cliValues.some(k => capKeyValueStr.includes(`${k || ""}`.toLowerCase())) : true
 			})
 		)
 	},

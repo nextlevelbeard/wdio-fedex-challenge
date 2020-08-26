@@ -38,7 +38,7 @@ Feature: Search for a Character
 	And the Characters names should contain <query>
 	Examples:
 	  | query		|
-	  | Ca		|
+	  | Ca			|
 
   Scenario Outline: A valid Character search like "<query>" should display a Not Found message for Planets
 	When I search for <query>
